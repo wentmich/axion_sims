@@ -1,0 +1,11 @@
+***** Code pertaining to axion minicluster simulations *****
+
+-- Gadget-MatRad: modified version of Gadget which calculates the 
+                  Hubble based on matter and radiation density 
+
+-- ICs: write scripts for field -> txt and txt -> snapshot
+
+-- GadgetAnimations: scipts to read snapshot files and plot density
+                     fields or scatter plots using povray
+
+-- Halo-Analysis: halo mass function and halo density profile calculators
