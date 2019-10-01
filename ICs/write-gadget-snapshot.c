@@ -43,13 +43,13 @@ leftover:		number of bytes leftover in the header (from total of 256)
 filler:			character to be used to fill up the header (can be arbitrary) */
 //const char* iFNAME = "/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/simulations/miniclustersICs/initial_data_in_txt_form.txt";
 //const char* oFNAME = "/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/simulations/miniclustersICs/initial_conditions_snapshot.dat";
-const int N_FULL = 100000000; // total number of type 1 particles in the simulation
-const double cfact = 18365200.41229695; //13434500.510994378 * 1.4606070432329787;// * 205.40494734447185;
-const int leftover = 256 - 6 * 4 - 6 * 8 - 2 * 8 - 2 * 4 - 6 * 4 - 2 * 4 - 4 * 8 - 3 * 4 - 6 * 4;
-const int NFILES = 8;
-const int N_PARTICLES = 12500000;
-const float MASS = 26334958525448.68;
-const float BOX_LENGTH = 6104076661.457854;
+const unsigned long N_FULL = 8000000000; // total number of type 1 particles in the simulation
+const double cfact = 19637053.537620023; //13434500.510994378 * 1.4606070432329787;// * 205.40494734447185;
+const int leftover = 256 - 6 * 4 - 6 * 8 - 2 * 8 - 2 * 4 - 6 * 8 - 2 * 4 - 4 * 8 - 3 * 4 - 6 * 4;
+const int NFILES = 1000;
+const int N_PARTICLES = 8000000;
+const float MASS = 32051887299076.293;
+const float BOX_LENGTH = 26262918072.827072;
 const char* filler = "a";
 char* x;
 char* y;
@@ -77,7 +77,7 @@ struct io_header_1
   double redshift;
   int flag_sfr;
   int flag_feedback;
-  int npartTotal[6];
+  unsigned long npartTotal[6];
   int flag_cooling;
   int num_files;
   double BoxSize;
@@ -122,12 +122,12 @@ void initialize_header()
     header.flag_sfr = 0; // unused
     header.flag_feedback = 0; // unused
 
-    header.npartTotal[0] = header.npart[0]; // total number of gas particles
+    header.npartTotal[0] = 0;//header.npart[0]; // total number of gas particles
     header.npartTotal[1] = N_FULL; // total number of halo particles
-    header.npartTotal[2] = header.npart[2]; // total number of disk particles
-    header.npartTotal[3] = header.npart[3]; // total number of bulge particles
-    header.npartTotal[4] = header.npart[4]; // total number of stars
-    header.npartTotal[5] = header.npart[5]; // total number of boundary particles
+    header.npartTotal[2] = 0;//header.npart[2]; // total number of disk particles
+    header.npartTotal[3] = 0;//header.npart[3]; // total number of bulge particles
+    header.npartTotal[4] = 0;//header.npart[4]; // total number of stars
+    header.npartTotal[5] = 0;//header.npart[5]; // total number of boundary particles
 
     header.flag_cooling = 0; // unused
 
@@ -226,13 +226,13 @@ int main()
     char iFNAME[200];
     char oFNAME[200];
     int i;
-    for (i = 0; i < NFILES; ++i)
+    for (i = NFILES - 1; i >= 0; --i)
     {
-        sprintf(iFNAME, "/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/miniclustersICs/ics_new/ics.%i.txt", i);
+        sprintf(iFNAME, "/scratch/bsafdi_root/bsafdi/wentmich/ics/ics.%i.txt", i);
         load_particle_data(iFNAME);
         initialize_header();
 	printf("box size: %f \n", header.BoxSize);
-        sprintf(oFNAME, "/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/simulations/minicluster_20.08.19/ICs/ics.%i", i);
+        sprintf(oFNAME, "/scratch/bsafdi_root/bsafdi/wentmich/miniclusters-full/ics/ics.%i", i);
         make_oFNAME(oFNAME);
 	write_unformatted_binary(oFNAME);
         //iFNAME.clear();

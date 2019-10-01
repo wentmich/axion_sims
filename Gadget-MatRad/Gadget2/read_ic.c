@@ -53,6 +53,8 @@ void read_ic(char *fname)
 
   while(rest_files > NTask)
     {
+      printf("ThisTask = %d\nrest_files = %d\nNTask = %d\n", ThisTask, rest_files, NTask);
+      printf("%d\n", ThisTask + (rest_files - NTask));
       sprintf(buf, "%s.%d", fname, ThisTask + (rest_files - NTask));
       if(All.ICFormat == 3)
 	sprintf(buf, "%s.%d.hdf5", fname, ThisTask + (rest_files - NTask));
@@ -467,6 +469,7 @@ void read_file(char *fname, int readTask, int lastTask)
 			  if(task == ThisTask)
 			    if(NumPart + n_for_this_task > All.MaxPart)
 			      {
+                                printf("%i, %i, %i\n", NumPart, n_for_this_task, All.MaxPart);
 				printf("too many particles\n");
 				endrun(1313);
 			      }
@@ -666,7 +669,7 @@ int find_files(char *fname)
     }
 
   MPI_Bcast(&header, sizeof(header), MPI_BYTE, 0, MPI_COMM_WORLD);
-
+  printf("%d\n", header.num_files);
   if(header.num_files > 0)
     return header.num_files;
 
