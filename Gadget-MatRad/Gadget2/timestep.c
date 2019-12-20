@@ -56,9 +56,9 @@ void advance_and_find_timesteps(void)
       hubble_a = All.Hubble * sqrt(hubble_a);
       a3inv = 1 / (All.Time * All.Time * All.Time);
       atime = All.Time;
-      FILE *hubble_output = fopen("/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/hubble_output.txt", "a");
-      fprintf(hubble_output, "%.15e\t%.15e\n", All.Time, hubble_a);
-      fclose(hubble_output);
+//      FILE *hubble_output = fopen("/nfs/turbo/bsafdi/wentmich/Axion_Structure_Sims/hubble_output.txt", "a");
+//      fprintf(hubble_output, "%.15e\t%.15e\n", All.Time, hubble_a);
+//      fclose(hubble_output);
     }
   else
     fac1 = fac2 = fac3 = hubble_a = a3inv = atime = 1;

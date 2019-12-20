@@ -23,7 +23,8 @@ void run(void)
   int stopflag = 0;
   char stopfname[200], contfname[200];
   double t0, t1;
-
+  char fhubble[200];
+  double hubble_rate;
 
   sprintf(stopfname, "%sstop", All.OutputDir);
   sprintf(contfname, "%scont", All.OutputDir);
@@ -62,6 +63,18 @@ void run(void)
 					 * momentum space and compute new
 					 * timesteps for them
 					 */
+/* Michael Wentzel's addition of a hubble_rate.txt output file */
+      sprintf(fhubble, "%s/hubble_rate.txt", All.OutputDir);
+
+      hubble_rate = All.Omega0 / (All.Time * All.Time * All.Time) + All.OmegaLambda / (All.Time * All.Time * All.Time * All.Time);
+      hubble_rate = All.Hubble * sqrt(hubble_rate);
+
+      FILE *hubble_output = fopen(fhubble, "a");
+      fprintf(hubble_output, "%.15e\t%.15e\n", All.Time, hubble_rate);
+      fclose(hubble_output);
+/* end of Michael's additions */
+
+
       All.NumCurrentTiStep++;
 
       /* Check whether we need to interrupt the run */
